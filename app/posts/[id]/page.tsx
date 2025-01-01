@@ -5,9 +5,10 @@ import Post from '@/app/_models/Post';
 // 게시글 상세 페이지
 async function PostPage({ params }: { params: { id: string } }) {
   await connectDB();
+  const { id } = await params;
   
   try {
-    const post = await Post.findById(params.id);
+    const post = await Post.findById(id);
     
     if (!post) {
       return notFound();

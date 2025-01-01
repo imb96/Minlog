@@ -1,13 +1,18 @@
-'use client';
+'use client'
 
-import { signIn, signOut, useSession } from 'next-auth/react';
+import { signIn, signOut, useSession } from 'next-auth/react'
 
 export default function AuthButton() {
-  const { data: session } = useSession();
+  const { data: session } = useSession()
 
   if (session) {
     return (
-      <button className="bg-red-500 text-white px-4 py-2 rounded" onClick={() => signOut()}>Sign out</button>
+      <button
+        className="bg-red-500 text-white px-4 py-2 rounded"
+        onClick={() => signOut()}
+      >
+        Sign out
+      </button>
     )
   }
 
@@ -21,5 +26,5 @@ export default function AuthButton() {
       </svg>
       GitHub로 로그인
     </button>
-  );
+  )
 }

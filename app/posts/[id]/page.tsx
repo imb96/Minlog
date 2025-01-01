@@ -1,17 +1,18 @@
-import { notFound } from 'next/navigation';
-import connectDB from '@/app/_lib/mongodb';
-import Post from '@/app/_models/Post';
+import { notFound } from 'next/navigation'
+
+import connectDB from '@/app/_lib/mongodb'
+import Post from '@/app/_models/Post'
 
 // 게시글 상세 페이지
 async function PostPage({ params }: { params: { id: string } }) {
-  await connectDB();
-  const { id } = await params;
-  
+  await connectDB()
+  const { id } = await params
+
   try {
-    const post = await Post.findById(id);
-    
+    const post = await Post.findById(id)
+
     if (!post) {
-      return notFound();
+      return notFound()
     }
 
     return (
@@ -24,15 +25,13 @@ async function PostPage({ params }: { params: { id: string } }) {
             <span>{post.author}</span>
           </div>
         </div>
-        
-        <div className="prose max-w-none">
-          {post.content}
-        </div>
+
+        <div className="prose max-w-none">{post.content}</div>
       </article>
-    );
+    )
   } catch (error) {
-    return notFound();
+    return notFound()
   }
 }
 
-export default PostPage;
+export default PostPage

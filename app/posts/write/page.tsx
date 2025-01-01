@@ -1,16 +1,17 @@
-'use client';
+'use client'
 
-import { useState } from 'react';
-import { useRouter } from 'next/navigation';
+import { useRouter } from 'next/navigation'
+
+import { useState } from 'react'
 
 export default function WritePage() {
-  const router = useRouter();
-  const [title, setTitle] = useState('');
-  const [content, setContent] = useState('');
+  const router = useRouter()
+  const [title, setTitle] = useState('')
+  const [content, setContent] = useState('')
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    
+    e.preventDefault()
+
     try {
       const response = await fetch('/api/posts', {
         method: 'POST',
@@ -20,18 +21,18 @@ export default function WritePage() {
         body: JSON.stringify({
           title,
           content,
-          author: '김민재'
+          author: '김민재',
         }),
-      });
+      })
 
       if (response.ok) {
-        router.push('/');
-        router.refresh();
+        router.push('/')
+        router.refresh()
       }
     } catch (error) {
-      console.error('Error:', error);
+      console.error('Error:', error)
     }
-  };
+  }
 
   return (
     <div className="max-w-4xl mx-auto p-4">
@@ -56,7 +57,7 @@ export default function WritePage() {
             required
           />
         </div>
-        <button 
+        <button
           type="submit"
           className="bg-blue-500 text-white px-4 py-2 rounded"
         >
@@ -64,5 +65,5 @@ export default function WritePage() {
         </button>
       </form>
     </div>
-  );
+  )
 }

@@ -2,12 +2,27 @@
 
 import { useRouter } from 'next/navigation'
 
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
+import ReactMarkdown from 'react-markdown'
 
 export default function WritePage() {
   const router = useRouter()
   const [title, setTitle] = useState('')
   const [content, setContent] = useState('')
+  const [isPreview, setIsPreview] = useState(false)
+  const textareaRef = useRef<HTMLTextAreaElement>(null)
+
+  const adjustTextareaHeight = () => {
+    const textarea = textareaRef.current
+    if (textarea) {
+      textarea.style.height = 'auto'
+      textarea.style.height = `${textarea.scrollHeight}px`
+    }
+  }
+
+  useEffect(() => {
+    adjustTextareaHeight()
+  }, [content])
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -48,18 +63,35 @@ export default function WritePage() {
             required
           />
         </div>
-        <div>
-          <textarea
-            value={content}
-            onChange={(e) => setContent(e.target.value)}
-            placeholder="내용을 입력하세요"
-            className="w-full p-2 border rounded h-64"
-            required
-          />
+
+        <div className="space-y-2">
+          <button
+            type="button"
+            onClick={() => setIsPreview(!isPreview)}
+            className="px-4 py-2 text-sm border rounded hover:bg-gray-100"
+          >
+            {isPreview ? '수정하기' : '미리보기'}
+          </button>
+
+          {isPreview ? (
+            <div className="border rounded p-4 prose prose-lg dark:prose-invert min-h-[400px] w-full max-w-none">
+              <ReactMarkdown>{content}</ReactMarkdown>
+            </div>
+          ) : (
+            <textarea
+              ref={textareaRef}
+              value={content}
+              onChange={(e) => setContent(e.target.value)}
+              placeholder="마크다운으로 내용을 입력하세요"
+              className="w-full p-4 border rounded min-h-[400px] font-mono overflow-hidden resize-none"
+              required
+            />
+          )}
         </div>
+
         <button
           type="submit"
-          className="bg-blue-500 text-white px-4 py-2 rounded"
+          className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
         >
           게시하기
         </button>

@@ -1,7 +1,6 @@
 import { getServerSession } from 'next-auth'
 import Link from 'next/link'
 
-import AuthButton from '@/app/components/AuthButton'
 import PostList from '@/app/components/PostList'
 
 export default async function Home() {

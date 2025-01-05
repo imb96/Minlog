@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import { getServerSession } from 'next-auth'
 import { Geist, Geist_Mono } from 'next/font/google'
+import Link from 'next/link'
 
 import AuthButton from '@/app/components/AuthButton'
 
@@ -36,7 +37,9 @@ export default async function RootLayout({
         <AuthProvider session={session}>
           <main className="max-w-4xl mx-auto px-4 py-8">
             <div className="flex justify-between items-center mb-8">
-              <h1 className="text-4xl font-bold">Minlog</h1>
+              <Link href="/">
+                <h1 className="text-4xl font-bold">Minlog</h1>
+              </Link>
               <AuthButton />
             </div>
             {children}
